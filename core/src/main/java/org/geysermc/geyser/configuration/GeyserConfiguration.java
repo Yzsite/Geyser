@@ -31,6 +31,7 @@ import org.geysermc.geyser.api.network.AuthType;
 import org.geysermc.geyser.api.network.BedrockListener;
 import org.geysermc.geyser.api.network.RemoteServer;
 import org.geysermc.geyser.network.CIDRMatcher;
+import org.geysermc.geyser.session.auth.AuthType;
 import org.geysermc.geyser.network.GameProtocol;
 import org.geysermc.geyser.text.GeyserLocale;
 
@@ -54,6 +55,8 @@ public interface GeyserConfiguration {
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     boolean isCommandSuggestions();
+    
+    ISplitscreenConfiguration getSplitscreen();
 
     @JsonIgnore
     boolean isPassthroughMotd();
@@ -161,6 +164,23 @@ public interface GeyserConfiguration {
         void setAuthType(AuthType authType);
     }
 
+    interface ISplitscreenConfiguration {
+        boolean isEnabled();
+        /**
+         * Will be removed after splitscreen XUID bug in consoles is fixed
+         */
+        @Deprecated
+        Map<String, ? extends ISplitscreenUserInfo> getUsers();
+    }
+    /**
+     * Will be removed after splitscreen XUID bug in consoles is fixed
+     */
+    @Deprecated
+    interface ISplitscreenUserInfo {
+        String getBedrockUsername();
+        String getXuid();
+    }
+    
     interface IMetricsInfo {
 
         boolean isEnabled();
